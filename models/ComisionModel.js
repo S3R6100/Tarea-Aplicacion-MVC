@@ -6,12 +6,14 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 const dbPath = path.resolve(__dirname, '../database/db.sqlite');
 
+/////////////////////////CONEXION A BASE DE DATOS////////////////////////////////
 const getDbConnection = () => {
   return new sqlite3.Database(dbPath, sqlite3.OPEN_READONLY, (err) => {
     if (err) console.error('Error connecting to database:', err.message);
   });
 };
 
+/////////////////////////MODELO DE VENDEDORES////////////////////////////////
 export const getVendedores = () => {
   return new Promise((resolve, reject) => {
     const db = getDbConnection();
@@ -23,6 +25,7 @@ export const getVendedores = () => {
   });
 };
 
+/////////////////////////MODELO DE VENTAS////////////////////////////////
 export const getVentasPorFecha = (fechaInicio, fechaFin) => {
   return new Promise((resolve, reject) => {
     const db = getDbConnection();
@@ -38,6 +41,7 @@ export const getVentasPorFecha = (fechaInicio, fechaFin) => {
   });
 };
 
+/////////////////////////MODELO DE REGLAS////////////////////////////////
 export const getReglas = () => {
   return new Promise((resolve, reject) => {
     const db = getDbConnection();

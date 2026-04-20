@@ -10,17 +10,16 @@ const __dirname = path.dirname(__filename);
 const app = express();
 const PORT = process.env.PORT || 3000;
 
-// Middleware
+/////////////////////////CONFIGURACION MIDDLEWARE////////////////////////////////
 app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static(path.join(__dirname, 'public')));
 
-// Routes
-// Esta ruta interactúa con el Controlador (C) de nuestro MVC
+/////////////////////////RUTAS DEL CONTROLADOR////////////////////////////////
 app.post('/api/comisiones', ComisionController.calcularComisiones);
 
-// Iniciar Servidor
+/////////////////////////INICIO DEL SERVIDOR////////////////////////////////
 app.listen(PORT, () => {
   console.log(`Servidor MVC corriendo en http://localhost:${PORT}`);
 });

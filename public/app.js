@@ -19,19 +19,18 @@ document.addEventListener('DOMContentLoaded', () => {
         `;
     }
 
+    /////////////////////////MANEJO DEL FORMULARIO Y PETICION API////////////////////////////////
     form.addEventListener('submit', async (e) => {
         e.preventDefault();
         
         const fechaInicio = document.getElementById('fechaInicio').value;
         const fechaFin = document.getElementById('fechaFin').value;
 
-        // UI Feedback - Show loading state
         btnText.style.display = 'none';
         loader.style.display = 'block';
         btnCalcular.disabled = true;
 
         try {
-            // Este es el llamado HTTP a nuestro Controlador MVC en el backend
             const response = await fetch('/api/comisiones', {
                 method: 'POST',
                 headers: {
@@ -46,7 +45,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
             const data = await response.json();
             
-            // Reflejar la respuesta en la Vista
+            /////////////////////////RENDERIZADO DE RESULTADOS EN LA VISTA////////////////////////////////
             if (data.length === 0) {
                 resultadosContainer.innerHTML = '<div class="empty-state"><p>No se encontraron vendedores.</p></div>';
             } else {
@@ -57,14 +56,12 @@ document.addEventListener('DOMContentLoaded', () => {
             console.error('Error:', error);
             resultadosContainer.innerHTML = `<div class="empty-state"><p style="color: #ef4444;">${error.message}</p></div>`;
         } finally {
-            // Restore UI
             btnText.style.display = 'block';
             loader.style.display = 'none';
             btnCalcular.disabled = false;
         }
     });
 
-    // Default dates (Enero - Febrero 2024 para tener datos porque el script initDB tiene de esas fechas)
-    document.getElementById('fechaInicio').value = '2024-01-01';
-    document.getElementById('fechaFin').value = '2024-02-28';
+    document.getElementById('fechaInicio').value = '2026-04-01';
+    document.getElementById('fechaFin').value = '2026-04-30';
 });

@@ -8,25 +8,21 @@ export const calcularComisiones = async (req, res) => {
       return res.status(400).json({ error: 'Las fechas inicio y fin son requeridas' });
     }
 
-    // 1. Obtener Datos del Modelo
+    /////////////////////////OBTENER DATOS DEL MODELO////////////////////////////////
     const vendedores = await ComisionModel.getVendedores();
     const ventas = await ComisionModel.getVentasPorFecha(fechaInicio, fechaFin);
     const reglas = await ComisionModel.getReglas();
 
-    // 2. Lógica de negocio (Calcular comisiones)
+    /////////////////////////LOGICA DE NEGOCIO Y CALCULOS////////////////////////////////
     const comisionesPorVendedor = vendedores.map(vendedor => {
-      // Filtrar las ventas de un vendedor específico
       const ventasVendedor = ventas.filter(v => v.vendedor_id === vendedor.id);
       
       let totalVentas = 0;
       let totalComision = 0;
 
-      // Por cada venta, calcular la comisión
       ventasVendedor.forEach(venta => {
         totalVentas += venta.monto;
         
-        // Las reglas están ordenadas descendentemente por el modelo (de mayor a menor)
-        // Encontraremos la primera regla que aplique
         const reglaAplicable = reglas.find(r => venta.monto >= r.cantidad_requerida);
         
         if (reglaAplicable) {
@@ -42,7 +38,7 @@ export const calcularComisiones = async (req, res) => {
       };
     });
 
-    // 3. Responder a la Vista con los resultados
+    /////////////////////////RESPUESTA A LA VISTA////////////////////////////////
     res.json(comisionesPorVendedor);
 
   } catch (error) {
