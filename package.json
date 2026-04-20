@@ -1,0 +1,16 @@
+{
+  "name": "minicore-mvc",
+  "version": "1.0.0",
+  "description": "Mini-core MVC application for commission calculation",
+  "main": "server.js",
+  "type": "module",
+  "scripts": {
+    "start": "node server.js",
+    "init-db": "node database/initDB.js"
+  },
+  "dependencies": {
+    "cors": "^2.8.5",
+    "express": "^4.18.2",
+    "sqlite3": "^5.1.7"
+  }
+}
